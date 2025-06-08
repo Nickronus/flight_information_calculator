@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".results">
+
+        <!-- Пункт -->
+        <TextView
+            android:id="@+id/labelPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ПУНКТ:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/textPoint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Москва"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/labelPoint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelPoint"
+            app:layout_constraintTop_toTopOf="@id/labelPoint"/>
+
+        <!-- Полётное время -->
+        <TextView
+            android:id="@+id/labelFlightTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="ПОЛЁТНОЕ:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelPoint"/>
+
+        <TextView
+            android:id="@+id/textFlightTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="2:30"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/labelFlightTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelFlightTime"
+            app:layout_constraintTop_toTopOf="@id/labelFlightTime"/>
+
+        <!-- Стоянка -->
+        <TextView
+            android:id="@+id/labelParking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="СТОЯНКА:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelFlightTime"/>
+
+        <TextView
+            android:id="@+id/textParking"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="1:15"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/labelParking"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelParking"
+            app:layout_constraintTop_toTopOf="@id/labelParking"/>
+
+        <!-- Задержка -->
+        <TextView
+            android:id="@+id/labelDelay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="ЗАДЕРЖКА:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelParking"/>
+
+        <TextView
+            android:id="@+id/textDelay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="0:45"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/labelDelay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelDelay"
+            app:layout_constraintTop_toTopOf="@id/labelDelay"/>
+
+        <!-- Общее рабочее -->
+        <TextView
+            android:id="@+id/labelTotalWork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="ОБЩЕЕ РАБОЧЕЕ:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelDelay"/>
+
+        <TextView
+            android:id="@+id/textTotalWork"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="4:30"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/labelTotalWork"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelTotalWork"
+            app:layout_constraintTop_toTopOf="@id/labelTotalWork"/>
+
+        <!-- Посадок -->
+        <TextView
+            android:id="@+id/labelLandings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="ПОСАДОК:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelTotalWork"/>
+
+        <TextView
+            android:id="@+id/textLandings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="3"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/labelLandings"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelLandings"
+            app:layout_constraintTop_toTopOf="@id/labelLandings"/>
+
+        <!-- Остаток -->
+        <TextView
+            android:id="@+id/labelRemaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="ОСТАТОК:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelLandings"/>
+
+        <TextView
+            android:id="@+id/textRemaining"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="1200 кг"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/labelRemaining"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelRemaining"
+            app:layout_constraintTop_toTopOf="@id/labelRemaining"/>
+
+        <!-- Расход норма -->
+        <TextView
+            android:id="@+id/labelNormConsumption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="РАСХОД НОРМА:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelRemaining"/>
+
+        <TextView
+            android:id="@+id/textNormConsumption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="800 кг"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/labelNormConsumption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelNormConsumption"
+            app:layout_constraintTop_toTopOf="@id/labelNormConsumption"/>
+
+        <!-- Расход фактический -->
+        <TextView
+            android:id="@+id/labelActualConsumption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="РАСХОД ФАКТИЧЕСКИЙ:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelNormConsumption"/>
+
+        <TextView
+            android:id="@+id/textActualConsumption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="750 кг"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/labelActualConsumption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelActualConsumption"
+            app:layout_constraintTop_toTopOf="@id/labelActualConsumption"/>
+
+        <!-- Экономия -->
+        <TextView
+            android:id="@+id/labelSavings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="ЭКОНОМИЯ:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelActualConsumption"/>
+
+        <TextView
+            android:id="@+id/textSavings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="50 кг"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/labelSavings"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelSavings"
+            app:layout_constraintTop_toTopOf="@id/labelSavings"/>
+
+        <!-- Перерасход -->
+        <TextView
+            android:id="@+id/labelOverconsumption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="ПЕРЕРАСХОД:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelSavings"/>
+
+        <TextView
+            android:id="@+id/textOverconsumption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="0 кг"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/labelOverconsumption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelOverconsumption"
+            app:layout_constraintTop_toTopOf="@id/labelOverconsumption"/>
+
+        <!-- Время врача -->
+        <TextView
+            android:id="@+id/labelDoctorTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="ВРЕМЯ ВРАЧА:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelOverconsumption"/>
+
+        <TextView
+            android:id="@+id/textDoctorTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="0:30"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/labelDoctorTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/labelDoctorTime"
+            app:layout_constraintTop_toTopOf="@id/labelDoctorTime"/>
+
+        <!-- Кнопка ПОНЯТНО внизу -->
+        <Button
+            android:id="@+id/btnUnderstand"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="40dp"
+            android:text="ПОНЯТНО"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/labelDoctorTime"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
