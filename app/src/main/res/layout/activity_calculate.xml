@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".calculate">
+    <!-- Время послеполётное (теперь ближе к центру) -->
+    <LinearLayout
+        android:id="@+id/postFlightTimeContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/btnCalculate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ВРЕМЯ ПОСЛЕПОЛЁТНОЕ"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/postFlightHours"
+                android:layout_width="50dp"
+                android:layout_height="48dp"
+                android:hint="ЧЧ"
+                android:inputType="number"
+                android:maxLength="2"
+                android:gravity="center"
+                android:background="@drawable/edit_text_border"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:textSize="16sp"
+                android:layout_marginHorizontal="4dp"/>
+
+            <EditText
+                android:id="@+id/postFlightMinutes"
+                android:layout_width="50dp"
+                android:layout_height="48dp"
+                android:hint="ММ"
+                android:inputType="number"
+                android:maxLength="2"
+                android:gravity="center"
+                android:background="@drawable/edit_text_border"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Кнопка РАССЧИТАТЬ (теперь ближе к кнопке Назад) -->
+    <Button
+        android:id="@+id/btnCalculate"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:text="РАССЧИТАТЬ"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnBackBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <!-- Кнопка НАЗАД внизу экрана -->
+    <Button
+        android:id="@+id/btnBackBottom"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="40dp"
+        android:text="Назад"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
