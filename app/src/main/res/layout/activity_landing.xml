@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".landing">
-    <!-- Шапка -->
+
+    <!-- Шапка (без изменений) -->
     <RelativeLayout
         android:id="@+id/headerLayout"
         android:layout_width="0dp"
@@ -41,7 +42,7 @@
             android:contentDescription="Вперёд"/>
     </RelativeLayout>
 
-    <!-- Время полёта -->
+    <!-- Время полёта (без изменений) -->
     <LinearLayout
         android:id="@+id/flightTimeContainer"
         android:layout_width="0dp"
@@ -95,9 +96,9 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Время посадки -->
+    <!-- Блок с датой и временем посадки -->
     <LinearLayout
-        android:id="@+id/landingTimeContainer"
+        android:id="@+id/landingDateTimeContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -110,10 +111,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ВРЕМЯ ПОСАДКИ"
+            android:text="ДАТА И ВРЕМЯ ПОСАДКИ"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"/>
 
+        <!-- Дата посадки -->
+        <EditText
+            android:id="@+id/landingDate"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:hint="дд.мм.гггг"
+            android:inputType="date"
+            android:gravity="center"
+            android:background="@drawable/edit_text_border"/>
+
+        <!-- Время посадки -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -160,9 +173,9 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/landingTimeContainer"/>
+        app:layout_constraintTop_toBottomOf="@id/landingDateTimeContainer"/>
 
-    <!-- Кнопки НАЗАД и ДАЛЕЕ - ТЕПЕРЬ АБСОЛЮТНО ВНИЗУ -->
+    <!-- Кнопки НАЗАД и ДАЛЕЕ -->
     <LinearLayout
         android:id="@+id/bottomButtons"
         android:layout_width="0dp"
