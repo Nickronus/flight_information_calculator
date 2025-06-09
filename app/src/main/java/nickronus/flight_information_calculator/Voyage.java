@@ -1,10 +1,11 @@
 package nickronus.flight_information_calculator;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Voyage {
+public class Voyage implements Serializable {
     public String name;
     public List<Flight> flights;
     public double emptyAircraftMass;  // Масса пустого борта (кг)

@@ -1,7 +1,9 @@
 package nickronus.flight_information_calculator;
-import java.time.LocalDateTime;
 
-public class Flight {
+import java.time.LocalDateTime;
+import java.io.Serializable;
+
+public class Flight implements Serializable {
     public double remaining;       // Остаток (кг)
     public double refueled;        // Заправлено (кг)
     public int people;             // Люди (количество)
