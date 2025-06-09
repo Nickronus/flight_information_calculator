@@ -81,6 +81,7 @@ public class start extends AppCompatActivity {
 
             Intent intent = new Intent(start.this, first.class);
             intent.putExtra("voyage", currentVoyage);
+            intent.putExtra("flight", 1);
             startActivity(intent);
 
         } catch (NumberFormatException e) {
