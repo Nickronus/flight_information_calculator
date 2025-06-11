@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class start extends AppCompatActivity {
     private Voyage currentVoyage;
-    private EditText etFlightName, etEmptyMass, etPassengerMass;
+    private EditText etFlightName, etEmptyMass, etPassengerMass, baseCentering;
     private Button buttonStart;
 
     @Override
@@ -34,6 +34,7 @@ public class start extends AppCompatActivity {
         etFlightName = findViewById(R.id.editTextText3);
         etEmptyMass = findViewById(R.id.numberInput5);
         etPassengerMass = findViewById(R.id.numberInput6);
+        baseCentering = findViewById(R.id.baseCenteringInput);
         buttonStart = findViewById(R.id.buttonStartGo3);
 
         // Получаем объект Voyage из Intent
@@ -48,6 +49,7 @@ public class start extends AppCompatActivity {
         etFlightName.setText(currentVoyage.name);
         etEmptyMass.setText(String.valueOf(currentVoyage.emptyAircraftMass));
         etPassengerMass.setText(String.valueOf(currentVoyage.averagePassengerMass));
+        baseCentering.setText(String.valueOf(currentVoyage.baseCentering));
 
         // Установка слушателя нажатий на кнопку "Старт"
         buttonStart.setOnClickListener(new View.OnClickListener() {
@@ -59,11 +61,12 @@ public class start extends AppCompatActivity {
     }
 
     public void onStartButtonClick(View view) {
-        String name = etFlightName.getText().toString(); // Используем правильное поле
-        String emptyAircraftMassText = etEmptyMass.getText().toString(); // Используем правильное поле
-        String emptyManMassText = etPassengerMass.getText().toString(); // Используем правильное поле
+        String name = etFlightName.getText().toString();
+        String emptyAircraftMassText = etEmptyMass.getText().toString();
+        String emptyManMassText = etPassengerMass.getText().toString();
+        String currentVoyageText = baseCentering.getText().toString();
 
-        if (name.isEmpty() || emptyAircraftMassText.isEmpty() || emptyManMassText.isEmpty()) {
+        if (name.isEmpty() || emptyAircraftMassText.isEmpty() || emptyManMassText.isEmpty() || currentVoyageText.isEmpty()) {
             Toast.makeText(this, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -71,17 +74,19 @@ public class start extends AppCompatActivity {
         try {
             double emptyAircraftMass = Double.parseDouble(emptyAircraftMassText);
             double emptyManMass = Double.parseDouble(emptyManMassText);
+            int baseCentering = Integer.parseInt(currentVoyageText);
 
             currentVoyage.name = name;
             currentVoyage.emptyAircraftMass = emptyAircraftMass;
             currentVoyage.averagePassengerMass = emptyManMass;
+            currentVoyage.baseCentering = baseCentering;
 
             Flight firstFlight = new Flight(0, 0, 0, 0, 0, 0, 0, null);
             currentVoyage.flights.add(firstFlight);
 
-            Intent intent = new Intent(start.this, first.class);
+            Intent intent = new Intent(start.this, centering.class);
             intent.putExtra("voyage", currentVoyage);
-            intent.putExtra("flight", 1);
+            intent.putExtra("flight_index", 1);
             startActivity(intent);
 
         } catch (NumberFormatException e) {

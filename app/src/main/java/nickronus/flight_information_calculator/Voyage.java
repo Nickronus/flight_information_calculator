@@ -13,6 +13,7 @@ public class Voyage implements Serializable {
     public LocalDateTime takeoffTime;  // Время взлёта
     public LocalDateTime preFlightTime;  // Предполётное время
     public LocalDateTime postFlightTime;  // Послеполётное время
+    public int baseCentering;
 
     public Voyage(String name, double emptyAircraftMass, double averagePassengerMass) {
         this.name = name;
