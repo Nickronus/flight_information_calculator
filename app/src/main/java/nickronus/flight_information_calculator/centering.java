@@ -155,7 +155,7 @@ public class centering extends AppCompatActivity {
         if (currentFlightIndex > 1) {
             saveData();
             currentFlightIndex--;
-            currentFlight = currentVoyage.flights.get(currentFlightIndex - 1);
+            currentFlight = currentVoyage.flights.get(currentFlightIndex - 2);
             updateUI();
         }
     }
@@ -164,7 +164,7 @@ public class centering extends AppCompatActivity {
         if (currentFlightIndex < currentVoyage.flights.size()) {
             saveData();
             currentFlightIndex++;
-            currentFlight = currentVoyage.flights.get(currentFlightIndex - 1);
+            currentFlight = currentVoyage.flights.get(currentFlightIndex);
             updateUI();
         }
     }
