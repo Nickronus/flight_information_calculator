@@ -13,6 +13,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.List;
+
 public class start extends AppCompatActivity {
     private Voyage currentVoyage;
     private EditText etFlightName, etEmptyMass, etPassengerMass, baseCentering;
@@ -83,6 +85,19 @@ public class start extends AppCompatActivity {
 
             Flight firstFlight = new Flight(0, 0, 0, 0, 0, 0, 0, null);
             currentVoyage.flights.add(firstFlight);
+
+            //TODO delete nahui
+//            DbHelper dbh = DbHelper.getInstance(this);
+//            List<Voyage> allVoyages= dbh.getAllVoyages();
+//            for (int i = 0; i < allVoyages.size(); i++) {
+//                if (currentVoyage.name.equals(allVoyages.get(i).name)) {
+//                    currentVoyage = allVoyages.get(i);
+//                    break;
+//                }
+//            }
+
+            DbHelper dbh = DbHelper.getInstance(this);
+            dbh.addVoyage(currentVoyage);
 
             Intent intent = new Intent(start.this, centering.class);
             intent.putExtra("voyage", currentVoyage);

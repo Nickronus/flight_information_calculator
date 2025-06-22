@@ -32,7 +32,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -40,4 +39,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // Добавьте эти новые зависимости
+    implementation("androidx.sqlite:sqlite:2.3.1") // Для работы с SQLite
+    implementation("androidx.sqlite:sqlite-ktx:2.3.1") // Kotlin расширения (если нужно)
+    implementation("com.jakewharton.threetenabp:threetenabp:1.4.6") // Для LocalDateTime
 }

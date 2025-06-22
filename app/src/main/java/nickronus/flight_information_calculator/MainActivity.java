@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //DbHelper dbh = DbHelper.getInstance(this);
+       // dbh.recreateDatabase();
     }
 
     public void onButtonGoClick(View view) {

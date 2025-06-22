@@ -76,6 +76,8 @@ public class stay extends AppCompatActivity {
     private void saveAndProceed() {
         save();
         try {
+            DbHelper dbh = DbHelper.getInstance(this);
+            dbh.addVoyage(currentVoyage);
             // Переход к следующему экрану
             Intent intent = new Intent(this, landing.class);
             intent.putExtra("voyage", currentVoyage);

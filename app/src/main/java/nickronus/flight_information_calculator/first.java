@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 public class first extends AppCompatActivity {
 
@@ -58,6 +59,7 @@ public class first extends AppCompatActivity {
 
     private void getIntentData() {
         currentVoyage = (Voyage) getIntent().getSerializableExtra("voyage");
+
         currentFlightIndex = getIntent().getIntExtra("flight_index", 0);
         currentFlight = currentVoyage.flights.get(currentFlightIndex - 1);
     }
@@ -135,6 +137,8 @@ public class first extends AppCompatActivity {
         try {
             // Сохраняем все данные
             saveData();
+            DbHelper dbh = DbHelper.getInstance(this);
+            dbh.addVoyage(currentVoyage);
 
             // Переход к следующему экрану
             Intent intent = new Intent(this, stay.class);

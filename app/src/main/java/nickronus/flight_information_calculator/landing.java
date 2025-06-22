@@ -215,6 +215,9 @@ public class landing extends AppCompatActivity {
 
         save();
 
+        DbHelper dbh = DbHelper.getInstance(this);
+        dbh.addVoyage(currentVoyage);
+
         try {
             Intent intent = new Intent(this, next.class);
             intent.putExtra("voyage", currentVoyage);

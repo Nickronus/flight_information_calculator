@@ -141,6 +141,9 @@ public class centering extends AppCompatActivity {
             currentFlight.people = getIntFromEditText(passengersInput);
             currentFlight.cargo = getDoubleFromEditText(cargoInput);
 
+            DbHelper dbh = DbHelper.getInstance(this);
+            dbh.addVoyage(currentVoyage);
+
             Intent intent = null;
             // Переход к следующему экрану
             if (currentFlightIndex == 1) {

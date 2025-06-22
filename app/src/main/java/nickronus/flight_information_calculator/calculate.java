@@ -51,6 +51,8 @@ public class calculate extends AppCompatActivity {
         try {
             // Сохраняем данные перед расчетом
             saveInputData();
+            DbHelper dbh = DbHelper.getInstance(this);
+            dbh.addVoyage(currentVoyage);
 
             // Выполняем расчеты (добавьте вашу логику расчетов здесь)
             performCalculations();
