@@ -64,8 +64,10 @@ public class results extends AppCompatActivity {
         textOverconsumption = findViewById(R.id.textOverconsumption);
         textDoctorTime = findViewById(R.id.textDoctorTime);
 
+        Flight currentFlight = currentVoyage.flights.get(currentVoyage.flights.size() - 1);
+
         // Пункт
-        LocalDateTime point = currentVoyage.flights.get(currentVoyage.flights.size() - 1).landingTime;
+        LocalDateTime point = currentFlight.landingTime;
         if (point != null){
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
             textPoint.setText(point.format(dateTimeFormatter));
@@ -93,7 +95,57 @@ public class results extends AppCompatActivity {
             ).toMinutes()));
         }
 
+        // Время врача
+        LocalDateTime doctorTime = null;
+        if (currentVoyage.plannedTakeoffTime != null){
+            doctorTime = currentVoyage.plannedTakeoffTime
+                    .minusMinutes(currentVoyage.flights.get(0).groundTime)
+                    .minusMinutes(currentVoyage.preFlightTime);
+        } else {
+            doctorTime = currentVoyage.takeoffTime
+                    .minusMinutes(currentVoyage.flights.get(0).groundTime)
+                    .minusMinutes(currentVoyage.preFlightTime);
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        textDoctorTime.setText(doctorTime.format(formatter));
 
+        // Общее рабочее
+        String totalWork = String.valueOf(Duration.between(
+                doctorTime,
+                currentFlight.landingTime.plusMinutes(currentFlight.groundTime).
+                plusMinutes(currentVoyage.postFlightTime)));
+        textTotalWork.setText(totalWork);
+
+        // Посадок
+        textLandings.setText(currentVoyage.flights.size());
+
+        // Остаток
+        textRemaining.setText(currentVoyage.remaining);
+
+        // Расход
+        int all = 0;
+        int ground = 0;
+        int fuel = 0;
+        for (int i = 1; i < currentVoyage.flights.size(); i++){
+            all += currentVoyage.flights.get(i - 1).flightTime;
+            ground += currentVoyage.flights.get(i - 1).groundTime;
+            fuel += currentVoyage.flights.get(i - 1).refueled;
+        }
+        double normConsumption = 10.666 * all + 6 * ground;
+        textNormConsumption.setText(String.valueOf(normConsumption));
+
+        double actualConsumption = (fuel + currentVoyage.flights.get(0).remaining) - currentVoyage.remaining;
+        textActualConsumption.setText(String.valueOf(actualConsumption));
+
+        double saving = normConsumption - actualConsumption;
+        if (saving > 0){
+            textSavings.setText(String.valueOf(saving));
+        }
+
+        double overconsumption = actualConsumption - normConsumption;
+        if (overconsumption > 0){
+            textOverconsumption.setText(String.valueOf(overconsumption));
+        }
 
 
         btnUnderstand = findViewById(R.id.btnUnderstand);

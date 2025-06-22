@@ -14,6 +14,7 @@ public class calculate extends AppCompatActivity {
     private Flight currentFlight;
 
     // UI элементы
+    private EditText remainingFuelInput;
     private EditText postFlightMinutes;
     private Button btnCalculate, btnBackBottom;
 
@@ -28,11 +29,15 @@ public class calculate extends AppCompatActivity {
         currentFlight = currentVoyage.flights.get(currentFlightIndex - 1);
 
         // Инициализация UI элементов
+        remainingFuelInput = findViewById(R.id.remainingFuelInput);
         postFlightMinutes = findViewById(R.id.postFlightMinutes);
         btnCalculate = findViewById(R.id.btnCalculate);
         btnBackBottom = findViewById(R.id.btnBackBottom);
 
-        // Заполнение поля, если данные уже есть
+        // Заполнение полей, если данные уже есть
+        if (currentVoyage.remaining > 0) {
+            remainingFuelInput.setText(String.valueOf(currentVoyage.remaining));
+        }
         if (currentVoyage.postFlightTime > 0) {
             postFlightMinutes.setText(String.valueOf(currentVoyage.postFlightTime));
         }
@@ -44,10 +49,11 @@ public class calculate extends AppCompatActivity {
 
     private void calculateAndShowResults() {
         try {
-            // Сохраняем послеполётное время
-            if (!postFlightMinutes.getText().toString().isEmpty()) {
-                currentVoyage.postFlightTime = Integer.parseInt(postFlightMinutes.getText().toString());
-            }
+            // Сохраняем данные перед расчетом
+            saveInputData();
+
+            // Выполняем расчеты (добавьте вашу логику расчетов здесь)
+            performCalculations();
 
             // Переходим на экран с результатами
             Intent intent = new Intent(this, results.class);
@@ -60,19 +66,34 @@ public class calculate extends AppCompatActivity {
         }
     }
 
-    private void navigateBack() {
-        // Сохраняем данные перед выходом
-        savePostFlightTime();
-        finish(); // Возвращаемся к предыдущей активности
-    }
-
-    private void savePostFlightTime() {
+    private void saveInputData() {
         try {
+            // Сохраняем остаток топлива
+            if (!remainingFuelInput.getText().toString().isEmpty()) {
+                currentVoyage.remaining = Integer.parseInt(remainingFuelInput.getText().toString());
+            }
+
+            // Сохраняем послеполётное время
             if (!postFlightMinutes.getText().toString().isEmpty()) {
                 currentVoyage.postFlightTime = Integer.parseInt(postFlightMinutes.getText().toString());
             }
         } catch (NumberFormatException e) {
+            // Обработка ошибок преобразования
+            throw e;
         }
+    }
+
+    private void performCalculations() {
+        // Здесь можно добавить вашу логику расчетов на основе:
+        // currentVoyage.remaining
+        // currentVoyage.postFlightTime
+        // и других данных из currentVoyage и currentFlight
+    }
+
+    private void navigateBack() {
+        // Сохраняем данные перед выходом
+        saveInputData();
+        finish(); // Возвращаемся к предыдущей активности
     }
 
     @Override

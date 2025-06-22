@@ -15,11 +15,13 @@ public class Voyage implements Serializable {
     public int preFlightTime;  // Предполётное время
     public int postFlightTime;  // Послеполётное время
     public int baseCentering;
+    public  int remaining;
 
     public Voyage(String name, double emptyAircraftMass, double averagePassengerMass) {
         this.name = name;
         this.emptyAircraftMass = emptyAircraftMass;
         this.averagePassengerMass = averagePassengerMass;
         this.flights = new ArrayList<>();
+        this.remaining = 0;
     }
 }
