@@ -67,15 +67,12 @@
             android:orientation="horizontal"
             android:gravity="center">
 
-            <EditText
+            <TextView
                 android:id="@+id/flightMinutes"
                 android:layout_width="86dp"
                 android:layout_height="48dp"
-                android:background="@drawable/edit_text_border"
                 android:gravity="center"
-                android:hint="ММ"
-                android:inputType="number"
-                android:maxLength="2" />
+                android:text="0" />
         </LinearLayout>
     </LinearLayout>
 

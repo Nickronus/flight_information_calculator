@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".first">
 
-    <!-- Заголовок (остаётся без изменений) -->
+    <!-- Заголовок -->
     <RelativeLayout
         android:id="@+id/headerLayout"
         android:layout_width="0dp"
@@ -34,7 +34,7 @@
             android:contentDescription="Вперёд"/>
     </RelativeLayout>
 
-    <!-- Предполётное время (без изменений) -->
+    <!-- Предполётное время -->
     <LinearLayout
         android:id="@+id/preFlightTimeContainer"
         android:layout_width="0dp"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="Предполётное время (всего)"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -67,11 +67,11 @@
                 android:gravity="center"
                 android:hint="ММ"
                 android:inputType="number"
-                android:maxLength="2" />
+                android:maxLength="3"/>
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Блок с датой и временем взлёта -->
+    <!-- Фактическая дата и время взлёта -->
     <LinearLayout
         android:id="@+id/takeoffDateTimeContainer"
         android:layout_width="0dp"
@@ -86,7 +86,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Дата и время взлёта"
+            android:text="Фактические дата и время взлёта"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"/>
 
@@ -137,18 +137,84 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- Планируемая дата и время взлёта -->
+    <LinearLayout
+        android:id="@+id/plannedTakeoffDateTimeContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/takeoffDateTimeContainer">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Планируемые дата и время взлёта"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Планируемая дата взлёта -->
+        <EditText
+            android:id="@+id/plannedTakeoffDate"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:hint="дд.мм.гггг"
+            android:inputType="date"
+            android:gravity="center"
+            android:background="@drawable/edit_text_border"/>
+
+        <!-- Планируемое время взлёта -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/plannedTakeoffHours"
+                android:layout_width="50dp"
+                android:layout_height="48dp"
+                android:hint="ЧЧ"
+                android:inputType="number"
+                android:maxLength="2"
+                android:gravity="center"
+                android:background="@drawable/edit_text_border"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:textSize="16sp"
+                android:layout_marginHorizontal="4dp"/>
+
+            <EditText
+                android:id="@+id/plannedTakeoffMinutes"
+                android:layout_width="50dp"
+                android:layout_height="48dp"
+                android:hint="ММ"
+                android:inputType="number"
+                android:maxLength="2"
+                android:gravity="center"
+                android:background="@drawable/edit_text_border"/>
+        </LinearLayout>
+    </LinearLayout>
+
     <!-- Кнопка ВЗЛЁТ -->
     <Button
         android:id="@+id/btnTakeoff"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginTop="32dp"
-        android:text="ВЗЛЁТ"
+        android:text="УСТАНОВИТЬ ТЕКУЩЕЕ ВРЕМЯ"
         android:textAllCaps="false"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/takeoffDateTimeContainer"/>
+        app:layout_constraintTop_toBottomOf="@id/plannedTakeoffDateTimeContainer"/>
 
     <!-- Кнопки НАЗАД и ДАЛЕЕ -->
     <LinearLayout

@@ -33,31 +33,14 @@
             android:gravity="center">
 
             <EditText
-                android:id="@+id/postFlightHours"
-                android:layout_width="50dp"
-                android:layout_height="48dp"
-                android:hint="ЧЧ"
-                android:inputType="number"
-                android:maxLength="2"
-                android:gravity="center"
-                android:background="@drawable/edit_text_border"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=":"
-                android:textSize="16sp"
-                android:layout_marginHorizontal="4dp"/>
-
-            <EditText
                 android:id="@+id/postFlightMinutes"
-                android:layout_width="50dp"
+                android:layout_width="95dp"
                 android:layout_height="48dp"
+                android:background="@drawable/edit_text_border"
+                android:gravity="center"
                 android:hint="ММ"
                 android:inputType="number"
-                android:maxLength="2"
-                android:gravity="center"
-                android:background="@drawable/edit_text_border"/>
+                android:maxLength="2" />
         </LinearLayout>
     </LinearLayout>
 

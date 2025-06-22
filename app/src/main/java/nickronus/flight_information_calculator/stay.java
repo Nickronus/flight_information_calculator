@@ -103,7 +103,7 @@ public class stay extends AppCompatActivity {
         saveData();
         if (currentFlightIndex > 1) {
             currentFlightIndex--;
-            currentFlight = currentVoyage.flights.get(currentFlightIndex - 2);
+            currentFlight = currentVoyage.flights.get(currentFlightIndex - 1);
             updateUI();
         }
     }
@@ -113,7 +113,10 @@ public class stay extends AppCompatActivity {
         if (currentFlightIndex < currentVoyage.flights.size()) {
             currentFlightIndex++;
             currentFlight = currentVoyage.flights.get(currentFlightIndex);
-            updateUI();
+            Intent intent = new Intent(this, centering.class);
+            intent.putExtra("voyage", currentVoyage);
+            intent.putExtra("flight_index", currentFlightIndex);
+            startActivity(intent);
         }
     }
 

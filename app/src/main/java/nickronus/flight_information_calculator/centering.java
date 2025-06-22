@@ -141,8 +141,14 @@ public class centering extends AppCompatActivity {
             currentFlight.people = getIntFromEditText(passengersInput);
             currentFlight.cargo = getDoubleFromEditText(cargoInput);
 
+            Intent intent = null;
             // Переход к следующему экрану
-            Intent intent = new Intent(this, first.class);
+            if (currentFlightIndex == 1) {
+                intent = new Intent(this, first.class);
+            }
+            else {
+                intent = new Intent(this, stay.class);
+            }
             intent.putExtra("voyage", currentVoyage);
             intent.putExtra("flight_index", currentFlightIndex);
             startActivity(intent);
@@ -155,7 +161,7 @@ public class centering extends AppCompatActivity {
         if (currentFlightIndex > 1) {
             saveData();
             currentFlightIndex--;
-            currentFlight = currentVoyage.flights.get(currentFlightIndex - 2);
+            currentFlight = currentVoyage.flights.get(currentFlightIndex - 1);
             updateUI();
         }
     }
@@ -164,7 +170,7 @@ public class centering extends AppCompatActivity {
         if (currentFlightIndex < currentVoyage.flights.size()) {
             saveData();
             currentFlightIndex++;
-            currentFlight = currentVoyage.flights.get(currentFlightIndex);
+            currentFlight = currentVoyage.flights.get(currentFlightIndex - 1);
             updateUI();
         }
     }

@@ -24,8 +24,9 @@ public class first extends AppCompatActivity {
 
     // UI элементы
     private TextView flightTitle;
-    private EditText preFlightHours, preFlightMinutes;
+    private EditText preFlightMinutes;
     private EditText takeoffDate, takeoffHours, takeoffMinutes;
+    private EditText plannedTakeoffDate, plannedTakeoffHours, plannedTakeoffMinutes;
     private ImageButton btnForward;
     private Button btnTakeoff, btnBackBottom, btnNext;
 
@@ -34,27 +35,40 @@ public class first extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
 
-        // Получаем данные из Intent
-        currentVoyage = (Voyage) getIntent().getSerializableExtra("voyage");
-        currentFlightIndex = getIntent().getIntExtra("flight_index", 0);
-        currentFlight = currentVoyage.flights.get(currentFlightIndex - 1);
+        initViews();
+        getIntentData();
+        setupUI();
+        setupListeners();
+    }
 
-        // Инициализация UI элементов
+    private void initViews() {
         flightTitle = findViewById(R.id.flightTitle);
         preFlightMinutes = findViewById(R.id.preFlightMinutes);
         takeoffDate = findViewById(R.id.takeoffDate);
         takeoffHours = findViewById(R.id.takeoffHours);
         takeoffMinutes = findViewById(R.id.takeoffMinutes);
+        plannedTakeoffDate = findViewById(R.id.plannedTakeoffDate);
+        plannedTakeoffHours = findViewById(R.id.plannedTakeoffHours);
+        plannedTakeoffMinutes = findViewById(R.id.plannedTakeoffMinutes);
         btnForward = findViewById(R.id.btnForward);
         btnTakeoff = findViewById(R.id.btnTakeoff);
         btnBackBottom = findViewById(R.id.btnBackBottom);
         btnNext = findViewById(R.id.btnNext);
+    }
 
-        // Установка заголовка
+    private void getIntentData() {
+        currentVoyage = (Voyage) getIntent().getSerializableExtra("voyage");
+        currentFlightIndex = getIntent().getIntExtra("flight_index", 0);
+        currentFlight = currentVoyage.flights.get(currentFlightIndex - 1);
+    }
+
+    private void setupUI() {
         flightTitle.setText(String.format("Полёт %d", currentFlightIndex));
 
-        preFlightMinutes.setText(String.format("%02d", currentVoyage.preFlightTime));
+        // Предполётное время
+        preFlightMinutes.setText(String.valueOf(currentVoyage.preFlightTime));
 
+        // Фактическое время взлёта
         if (currentVoyage.takeoffTime != null) {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             takeoffDate.setText(currentVoyage.takeoffTime.format(dateFormatter));
@@ -62,24 +76,32 @@ public class first extends AppCompatActivity {
             takeoffMinutes.setText(String.format("%02d", currentVoyage.takeoffTime.getMinute()));
         }
 
-        // Установка обработчиков событий
+        // Планируемое время взлёта
+        if (currentVoyage.plannedTakeoffTime != null) {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            plannedTakeoffDate.setText(currentVoyage.plannedTakeoffTime.format(dateFormatter));
+            plannedTakeoffHours.setText(String.format("%02d", currentVoyage.plannedTakeoffTime.getHour()));
+            plannedTakeoffMinutes.setText(String.format("%02d", currentVoyage.plannedTakeoffTime.getMinute()));
+        }
+    }
+
+    private void setupListeners() {
         btnForward.setOnClickListener(v -> navigateForward());
         btnBackBottom.setOnClickListener(v -> navigateBack());
         btnNext.setOnClickListener(v -> saveAndProceed());
-        btnTakeoff.setOnClickListener(v -> setTakeoffTimeToNow());
+        btnTakeoff.setOnClickListener(v -> setCurrentTakeoffTime());
 
-        // Добавляем валидацию для полей ввода времени
+        // Валидация полей времени
         addTimeValidation(takeoffHours, 23);
         addTimeValidation(takeoffMinutes, 59);
+        addTimeValidation(plannedTakeoffHours, 23);
+        addTimeValidation(plannedTakeoffMinutes, 59);
     }
 
     private void addTimeValidation(EditText editText, int maxValue) {
         editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -91,14 +113,14 @@ public class first extends AppCompatActivity {
                             editText.setSelection(editText.getText().length());
                         }
                     } catch (NumberFormatException e) {
-                        // Игнорируем
+                        editText.setText("");
                     }
                 }
             }
         });
     }
 
-    private void setTakeoffTimeToNow() {
+    private void setCurrentTakeoffTime() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
@@ -106,33 +128,73 @@ public class first extends AppCompatActivity {
         takeoffHours.setText(String.format("%02d", now.getHour()));
         takeoffMinutes.setText(String.format("%02d", now.getMinute()));
 
-        Toast.makeText(this, "Установлено текущее время", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Установлено текущее время взлёта", Toast.LENGTH_SHORT).show();
     }
 
     private void saveAndProceed() {
         try {
-            // Сохранение предварительного времени полёта
-            currentVoyage.preFlightTime = preFlightMinutes.getText().toString().isEmpty() ? 0 :
-                    Integer.parseInt(preFlightMinutes.getText().toString());
-
-            // Сохранение даты и времени взлёта
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            LocalDate date = LocalDate.parse(takeoffDate.getText().toString(), dateFormatter);
-
-            int takeoffH = takeoffHours.getText().toString().isEmpty() ? 0 :
-                    Integer.parseInt(takeoffHours.getText().toString());
-            int takeoffM = takeoffMinutes.getText().toString().isEmpty() ? 0 :
-                    Integer.parseInt(takeoffMinutes.getText().toString());
-
-            currentVoyage.takeoffTime = LocalDateTime.of(date, LocalTime.of(takeoffH, takeoffM));
+            // Сохраняем все данные
+            saveData();
 
             // Переход к следующему экрану
             Intent intent = new Intent(this, stay.class);
             intent.putExtra("voyage", currentVoyage);
             intent.putExtra("flight_index", currentFlightIndex);
             startActivity(intent);
-        } catch (DateTimeParseException | NumberFormatException e) {
+        } catch (Exception e) {
             Toast.makeText(this, "Проверьте введенные данные", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void saveData() {
+        try {
+            // Сохранение предварительного времени
+            if (!preFlightMinutes.getText().toString().isEmpty()) {
+                currentVoyage.preFlightTime = Integer.parseInt(preFlightMinutes.getText().toString());
+            }
+
+            // Сохранение фактического времени взлёта
+            saveTakeoffTime();
+
+            // Сохранение планируемого времени взлёта
+            savePlannedTakeoffTime();
+
+        } catch (Exception e) {
+            // Игнорируем ошибки при сохранении
+        }
+    }
+
+    private void saveTakeoffTime() throws DateTimeParseException, NumberFormatException {
+        if (!takeoffDate.getText().toString().isEmpty() &&
+                !takeoffHours.getText().toString().isEmpty() &&
+                !takeoffMinutes.getText().toString().isEmpty()) {
+
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            LocalDate date = LocalDate.parse(takeoffDate.getText().toString(), dateFormatter);
+            int hours = Integer.parseInt(takeoffHours.getText().toString());
+            int minutes = Integer.parseInt(takeoffMinutes.getText().toString());
+
+            currentVoyage.takeoffTime = LocalDateTime.of(date, LocalTime.of(hours, minutes));
+        }
+    }
+
+    private void savePlannedTakeoffTime() {
+        try {
+            if (!plannedTakeoffDate.getText().toString().isEmpty() &&
+                    !plannedTakeoffHours.getText().toString().isEmpty() &&
+                    !plannedTakeoffMinutes.getText().toString().isEmpty()) {
+
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                LocalDate date = LocalDate.parse(plannedTakeoffDate.getText().toString(), dateFormatter);
+                int hours = Integer.parseInt(plannedTakeoffHours.getText().toString());
+                int minutes = Integer.parseInt(plannedTakeoffMinutes.getText().toString());
+
+                currentVoyage.plannedTakeoffTime = LocalDateTime.of(date, LocalTime.of(hours, minutes));
+            } else {
+                currentVoyage.plannedTakeoffTime = null;
+            }
+        } catch (Exception e) {
+            currentVoyage.plannedTakeoffTime = null;
         }
     }
 
@@ -140,10 +202,10 @@ public class first extends AppCompatActivity {
         saveData();
         if (currentFlightIndex > 1) {
             currentFlightIndex--;
-            currentFlight = currentVoyage.flights.get(currentFlightIndex - 2);
+            currentFlight = currentVoyage.flights.get(currentFlightIndex - 1);
             updateUI();
         } else {
-            finish(); // Возвращаемся к предыдущей активности, если это первый полёт
+            finish();
         }
     }
 
@@ -151,44 +213,43 @@ public class first extends AppCompatActivity {
         saveData();
         if (currentFlightIndex < currentVoyage.flights.size()) {
             currentFlightIndex++;
-            currentFlight = currentVoyage.flights.get(currentFlightIndex);
+            currentFlight = currentVoyage.flights.get(currentFlightIndex - 1);
             updateUI();
-        }
-    }
-
-    private void saveData() {
-        try {
-            // Сохранение предварительного времени полёта
-            if (!preFlightMinutes.getText().toString().isEmpty()) {
-                currentVoyage.preFlightTime = Integer.parseInt(preFlightMinutes.getText().toString());
-            }
-
-            // Сохранение даты и времени взлёта
-            if (!takeoffDate.getText().toString().isEmpty() &&
-                    !takeoffHours.getText().toString().isEmpty() &&
-                    !takeoffMinutes.getText().toString().isEmpty()) {
-
-                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-                LocalDate date = LocalDate.parse(takeoffDate.getText().toString(), dateFormatter);
-                int takeoffH = Integer.parseInt(takeoffHours.getText().toString());
-                int takeoffM = Integer.parseInt(takeoffMinutes.getText().toString());
-                currentVoyage.takeoffTime = LocalDateTime.of(date, LocalTime.of(takeoffH, takeoffM));
-            }
-        } catch (DateTimeParseException | NumberFormatException e) {
-            // Игнорируем ошибки при сохранении
         }
     }
 
     private void updateUI() {
         flightTitle.setText(String.format("Полёт %d", currentFlightIndex));
 
-        preFlightMinutes.setText(String.format("%02d", currentVoyage.preFlightTime));
+        // Обновляем только если значения изменились
+        if (!preFlightMinutes.getText().toString().equals(String.valueOf(currentVoyage.preFlightTime))) {
+            preFlightMinutes.setText(String.valueOf(currentVoyage.preFlightTime));
+        }
 
+        // Фактическое время взлёта
         if (currentVoyage.takeoffTime != null) {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            takeoffDate.setText(currentVoyage.takeoffTime.format(dateFormatter));
-            takeoffHours.setText(String.format("%02d", currentVoyage.takeoffTime.getHour()));
-            takeoffMinutes.setText(String.format("%02d", currentVoyage.takeoffTime.getMinute()));
+            String currentDate = takeoffDate.getText().toString();
+            String newDate = currentVoyage.takeoffTime.format(dateFormatter);
+
+            if (!currentDate.equals(newDate)) {
+                takeoffDate.setText(newDate);
+                takeoffHours.setText(String.format("%02d", currentVoyage.takeoffTime.getHour()));
+                takeoffMinutes.setText(String.format("%02d", currentVoyage.takeoffTime.getMinute()));
+            }
+        }
+
+        // Планируемое время взлёта
+        if (currentVoyage.plannedTakeoffTime != null) {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            String currentDate = plannedTakeoffDate.getText().toString();
+            String newDate = currentVoyage.plannedTakeoffTime.format(dateFormatter);
+
+            if (!currentDate.equals(newDate)) {
+                plannedTakeoffDate.setText(newDate);
+                plannedTakeoffHours.setText(String.format("%02d", currentVoyage.plannedTakeoffTime.getHour()));
+                plannedTakeoffMinutes.setText(String.format("%02d", currentVoyage.plannedTakeoffTime.getMinute()));
+            }
         }
     }
 

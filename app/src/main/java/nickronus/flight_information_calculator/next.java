@@ -75,7 +75,10 @@ public class next extends AppCompatActivity {
     private void navigateForward() {
         if (currentFlightIndex < currentVoyage.flights.size()) {
             currentFlightIndex++;
-            updateUI();
+            Intent intent = new Intent(this, centering.class);
+            intent.putExtra("voyage", currentVoyage);
+            intent.putExtra("flight_index", currentFlightIndex);
+            startActivity(intent);
         }
     }
 
