@@ -36,4 +36,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, activity_voyage_history.class);
         startActivity(intent);
     }
+
+    public void onButtonInfoClick(View view) {
+        Intent intent = new Intent(MainActivity.this, info.class);
+        startActivity(intent);
+    }
+
 }
