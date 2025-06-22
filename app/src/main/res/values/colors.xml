@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="button_continue_green">#4CAF50</color>
     <color name="button_finish_red">#F44336</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="red_500">#FF0000</color>
 </resources>

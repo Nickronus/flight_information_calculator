@@ -13,6 +13,10 @@
         android:theme="@style/Theme.Flight_information_calculator"
         tools:targetApi="31">
         <activity
+            android:name=".activity_voyage_history"
+            android:exported="false"
+            android:theme="@style/Theme.Flight_information_calculator" />
+        <activity
             android:name=".results"
             android:exported="false" />
         <activity

@@ -32,12 +32,13 @@
         android:layout_height="60dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_secondary"
+        android:onClick="onButtonHistoryClick"
         android:text="История полетов"
         android:textColor="#2A2A2A"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonSettings"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonSettings"
