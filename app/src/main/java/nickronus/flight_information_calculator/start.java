@@ -45,6 +45,8 @@ public class start extends AppCompatActivity {
         // Если Voyage не был передан, создаем новый
         if (currentVoyage == null) {
             currentVoyage = new Voyage("", 0, 0);
+            Flight firstFlight = new Flight(0, 0, 0, 0, 0, 0, 0, null);
+            currentVoyage.flights.add(firstFlight);
         }
 
         // Заполнение полей, если данные уже есть
@@ -82,19 +84,6 @@ public class start extends AppCompatActivity {
             currentVoyage.emptyAircraftMass = emptyAircraftMass;
             currentVoyage.averagePassengerMass = emptyManMass;
             currentVoyage.baseCentering = baseCentering;
-
-            Flight firstFlight = new Flight(0, 0, 0, 0, 0, 0, 0, null);
-            currentVoyage.flights.add(firstFlight);
-
-            //TODO delete nahui
-//            DbHelper dbh = DbHelper.getInstance(this);
-//            List<Voyage> allVoyages= dbh.getAllVoyages();
-//            for (int i = 0; i < allVoyages.size(); i++) {
-//                if (currentVoyage.name.equals(allVoyages.get(i).name)) {
-//                    currentVoyage = allVoyages.get(i);
-//                    break;
-//                }
-//            }
 
             DbHelper dbh = DbHelper.getInstance(this);
             dbh.addVoyage(currentVoyage);

@@ -76,16 +76,16 @@ public class results extends AppCompatActivity {
         // Полётное
         int flightTime = 0;
         for (int i = 1; i < currentVoyage.flights.size(); i++){
-            flightTime += currentVoyage.flights.get(i).flightTime + currentVoyage.flights.get(i).groundTime;
+            flightTime += currentVoyage.flights.get(i - 1).flightTime + currentVoyage.flights.get(i - 1).groundTime;
         }
-        textFlightTime.setText(flightTime);
+        textFlightTime.setText(String.valueOf(flightTime));
 
         // Стоянка
         int parking = 0;
         for (int i = 1; i < currentVoyage.flights.size(); i++){
-            parking += currentVoyage.flights.get(i).parkingTime;
+            parking += currentVoyage.flights.get(i - 1).parkingTime;
         }
-        textParking.setText(parking);
+        textParking.setText(String.valueOf(parking));
 
         // Задержка
         if (currentVoyage.plannedTakeoffTime != null){
@@ -110,17 +110,17 @@ public class results extends AppCompatActivity {
         textDoctorTime.setText(doctorTime.format(formatter));
 
         // Общее рабочее
-        String totalWork = String.valueOf(Duration.between(
+        int totalWork = (int)Duration.between(
                 doctorTime,
                 currentFlight.landingTime.plusMinutes(currentFlight.groundTime).
-                plusMinutes(currentVoyage.postFlightTime)));
-        textTotalWork.setText(totalWork);
+                plusMinutes(currentVoyage.postFlightTime)).toMinutes();
+        textTotalWork.setText(String.valueOf(formatTime(totalWork)));
 
         // Посадок
-        textLandings.setText(currentVoyage.flights.size());
+        textLandings.setText(String.valueOf(currentVoyage.flights.size()));
 
         // Остаток
-        textRemaining.setText(currentVoyage.remaining);
+        textRemaining.setText(String.valueOf((currentVoyage.remaining)));
 
         // Расход
         int all = 0;

@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
+import android.widget.Button;
 
 public class activity_voyage_history extends AppCompatActivity
         implements VoyageAdapter.OnVoyageClickListener,
@@ -17,25 +19,31 @@ public class activity_voyage_history extends AppCompatActivity
     private RecyclerView voyageRecyclerView;
     private VoyageAdapter adapter;
     private List<Voyage> voyages = new ArrayList<>();
+    DbHelper dbh = null;
+    private Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voyage_history);
 
+        // Инициализация элементов UI
         voyageRecyclerView = findViewById(R.id.voyageRecyclerView);
+        backButton = findViewById(R.id.backButton);
+
+        // Настройка RecyclerView
         voyageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        loadSampleVoyages();
+        // Загрузка данных
+        dbh = DbHelper.getInstance(this);
+        voyages = dbh.getAllVoyages();
 
+        // Настройка адаптера
         adapter = new VoyageAdapter(voyages, this, this, this);
         voyageRecyclerView.setAdapter(adapter);
-    }
 
-    private void loadSampleVoyages() {
-        voyages.add(new Voyage("Рейс #1 - Москва-Сочи", 5000, 80));
-        voyages.add(new Voyage("Рейс #2 - СПб-Калининград", 5200, 85));
-        voyages.add(new Voyage("Рейс #3 - Новосибирск-Владивосток", 4800, 75));
+        // Обработчик для кнопки "Назад"
+        backButton.setOnClickListener(v -> onBackPressed());
     }
 
     @Override
@@ -52,24 +60,43 @@ public class activity_voyage_history extends AppCompatActivity
     public void onDeleteClick(Voyage voyage) {
         int position = voyages.indexOf(voyage);
         if (position != -1) {
-            // Здесь должна быть ваша логика удаления из базы данных
-            voyages.remove(position);
-            adapter.notifyItemRemoved(position);
+            // Создаем диалог подтверждения
+            new AlertDialog.Builder(this)
+                    .setTitle("Подтверждение удаления")
+                    .setMessage("Вы уверены, что хотите удалить рейс \"" + voyage.name + "\"?")
+                    .setPositiveButton("Удалить", (dialog, which) -> {
+                        // Действие при подтверждении
+                        voyages.remove(position);
+                        adapter.notifyItemRemoved(position);
 
-            // Показать уведомление об удалении
-            Toast.makeText(this, "Рейс удален", Toast.LENGTH_SHORT).show();
+                        dbh.deleteVoyage(voyage.name);
+                        Toast.makeText(this, "Рейс удален", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("Отмена", (dialog, which) -> {
+                        // Ничего не делаем, просто закрываем диалог
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }
     }
 
+
     private void openVoyageDetails(Voyage voyage) {
-//        Intent intent = new Intent(this, VoyageDetailsActivity.class);
-//        intent.putExtra("voyage", voyage);
-//        startActivity(intent);
+        Intent intent = new Intent(this, activity_flight_details.class);
+        intent.putExtra("voyage", voyage);
+        startActivity(intent);
     }
 
     private void openEditVoyage(Voyage voyage) {
-//        Intent intent = new Intent(this, EditVoyageActivity.class);
-//        intent.putExtra("voyage", voyage);
-//        startActivity(intent);
+        Intent intent = new Intent(this, start.class);
+        intent.putExtra("voyage", voyage);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Закрываем активность и возвращаемся к предыдущей
+        super.onBackPressed();
+        finish();
     }
 }
