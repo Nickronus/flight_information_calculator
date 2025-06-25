@@ -75,15 +75,15 @@ public class results extends AppCompatActivity {
 
         // Полётное
         int flightTime = 0;
-        for (int i = 1; i < currentVoyage.flights.size(); i++){
-            flightTime += currentVoyage.flights.get(i - 1).flightTime + currentVoyage.flights.get(i - 1).groundTime;
+        for (int i = 0; i < currentVoyage.flights.size(); i++){
+            flightTime += currentVoyage.flights.get(i).flightTime + currentVoyage.flights.get(i).groundTime;
         }
         textFlightTime.setText(String.valueOf(flightTime));
 
         // Стоянка
         int parking = 0;
-        for (int i = 1; i < currentVoyage.flights.size(); i++){
-            parking += currentVoyage.flights.get(i - 1).parkingTime;
+        for (int i = 0; i < currentVoyage.flights.size(); i++){
+            parking += currentVoyage.flights.get(i).parkingTime;
         }
         textParking.setText(String.valueOf(parking));
 
@@ -126,10 +126,10 @@ public class results extends AppCompatActivity {
         int all = 0;
         int ground = 0;
         int fuel = 0;
-        for (int i = 1; i < currentVoyage.flights.size(); i++){
-            all += currentVoyage.flights.get(i - 1).flightTime;
-            ground += currentVoyage.flights.get(i - 1).groundTime;
-            fuel += currentVoyage.flights.get(i - 1).refueled;
+        for (int i = 0; i < currentVoyage.flights.size(); i++){
+            all += currentVoyage.flights.get(i).flightTime;
+            ground += currentVoyage.flights.get(i).groundTime;
+            fuel += currentVoyage.flights.get(i).refueled;
         }
         double normConsumption = 10.666 * all + 6 * ground;
         textNormConsumption.setText(String.valueOf(normConsumption));

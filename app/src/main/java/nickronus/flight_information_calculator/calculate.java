@@ -54,9 +54,6 @@ public class calculate extends AppCompatActivity {
             DbHelper dbh = DbHelper.getInstance(this);
             dbh.addVoyage(currentVoyage);
 
-            // Выполняем расчеты (добавьте вашу логику расчетов здесь)
-            performCalculations();
-
             // Переходим на экран с результатами
             Intent intent = new Intent(this, results.class);
             intent.putExtra("voyage", currentVoyage);
@@ -79,17 +76,12 @@ public class calculate extends AppCompatActivity {
             if (!postFlightMinutes.getText().toString().isEmpty()) {
                 currentVoyage.postFlightTime = Integer.parseInt(postFlightMinutes.getText().toString());
             }
+            DbHelper dbh = DbHelper.getInstance(this);
+            dbh.addVoyage(currentVoyage);
         } catch (NumberFormatException e) {
             // Обработка ошибок преобразования
             throw e;
         }
-    }
-
-    private void performCalculations() {
-        // Здесь можно добавить вашу логику расчетов на основе:
-        // currentVoyage.remaining
-        // currentVoyage.postFlightTime
-        // и других данных из currentVoyage и currentFlight
     }
 
     private void navigateBack() {

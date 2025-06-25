@@ -59,8 +59,9 @@ public class next extends AppCompatActivity {
     }
 
     private void finishVoyage() {
-        Intent intent = new Intent(this, results.class);
+        Intent intent = new Intent(this, calculate.class);
         intent.putExtra("voyage", currentVoyage);
+        intent.putExtra("flight_index", currentVoyage.flights.size());
         startActivity(intent);
         finish();
     }

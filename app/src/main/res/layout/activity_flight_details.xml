@@ -12,16 +12,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Flight Details"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:text="Детали полёта 1"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Remaining (kg):"/>
+            android:text="Остаток (kг):" />
 
         <TextView
             android:id="@+id/remainingEditText"
@@ -31,8 +31,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Refueled (kg):"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:text="Заправлено (кг):" />
 
         <TextView
             android:id="@+id/refueledEditText"
@@ -42,8 +42,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="People:"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:text="Люди:" />
 
         <TextView
             android:id="@+id/peopleEditText"
@@ -53,8 +53,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cargo (kg):"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:text="Груз (kг):" />
 
         <TextView
             android:id="@+id/cargoEditText"
@@ -64,8 +64,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ground Time (min):"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:text="Земля (мин):" />
 
         <TextView
             android:id="@+id/groundTimeEditText"
@@ -75,8 +75,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Parking Time (min):"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:text="Стоянка (мин):" />
 
         <TextView
             android:id="@+id/parkingTimeEditText"
@@ -86,8 +86,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Flight Time (min):"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:text="Полётное время (мин):" />
 
         <TextView
             android:id="@+id/flightTimeEditText"
@@ -97,8 +97,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Landing Time (yyyy-MM-dd HH:mm):"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:text="Посадка:" />
 
         <TextView
             android:id="@+id/landingTimeEditText"
