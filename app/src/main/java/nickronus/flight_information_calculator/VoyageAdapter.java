@@ -57,7 +57,6 @@ public class VoyageAdapter extends RecyclerView.Adapter<VoyageAdapter.VoyageView
         return voyages.size();
     }
 
-    // Метод для удаления элемента
     public void removeItem(int position) {
         voyages.remove(position);
         notifyItemRemoved(position);

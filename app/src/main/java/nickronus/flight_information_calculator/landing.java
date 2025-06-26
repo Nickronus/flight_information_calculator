@@ -14,7 +14,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.time.Duration;
 
 public class landing extends AppCompatActivity {
@@ -23,7 +22,6 @@ public class landing extends AppCompatActivity {
     private Flight currentFlight;
     private int currentFlightIndex = 0;
 
-    // UI элементы
     private TextView flightTitle;
     private TextView flightMinutes;
     private EditText landingDate, landingHours, landingMinutes;
@@ -35,12 +33,10 @@ public class landing extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
 
-        // Получаем данные из Intent
         currentVoyage = (Voyage) getIntent().getSerializableExtra("voyage");
         currentFlightIndex = getIntent().getIntExtra("flight_index", 0);
         currentFlight = currentVoyage.flights.get(currentFlightIndex - 1);
 
-        // Инициализация UI элементов
         initViews();
         setupUI();
         setupListeners();
@@ -105,7 +101,7 @@ public class landing extends AppCompatActivity {
         }
 
         try {
-            save(); // Сохраняем текущие данные
+            save();
 
             if (currentFlight.landingTime == null) {
                 return;
@@ -278,7 +274,6 @@ public class landing extends AppCompatActivity {
                 currentFlight.landingTime = LocalDateTime.of(date, LocalTime.of(landingH, landingM));
             }
         } catch (Exception e) {
-            // Игнорируем ошибки при сохранении
         }
     }
 

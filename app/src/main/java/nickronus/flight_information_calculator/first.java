@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.List;
+
 
 public class first extends AppCompatActivity {
 
@@ -23,7 +23,6 @@ public class first extends AppCompatActivity {
     private Flight currentFlight;
     private int currentFlightIndex = 0;
 
-    // UI элементы
     private TextView flightTitle;
     private EditText preFlightMinutes;
     private EditText takeoffDate, takeoffHours, takeoffMinutes;
@@ -66,11 +65,8 @@ public class first extends AppCompatActivity {
 
     private void setupUI() {
         flightTitle.setText(String.format("Полёт %d", currentFlightIndex));
-
-        // Предполётное время
         preFlightMinutes.setText(String.valueOf(currentVoyage.preFlightTime));
 
-        // Фактическое время взлёта
         if (currentVoyage.takeoffTime != null) {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             takeoffDate.setText(currentVoyage.takeoffTime.format(dateFormatter));
@@ -78,7 +74,6 @@ public class first extends AppCompatActivity {
             takeoffMinutes.setText(String.format("%02d", currentVoyage.takeoffTime.getMinute()));
         }
 
-        // Планируемое время взлёта
         if (currentVoyage.plannedTakeoffTime != null) {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             plannedTakeoffDate.setText(currentVoyage.plannedTakeoffTime.format(dateFormatter));
@@ -93,7 +88,6 @@ public class first extends AppCompatActivity {
         btnNext.setOnClickListener(v -> saveAndProceed());
         btnTakeoff.setOnClickListener(v -> setCurrentTakeoffTime());
 
-        // Валидация полей времени
         addTimeValidation(takeoffHours, 23);
         addTimeValidation(takeoffMinutes, 59);
         addTimeValidation(plannedTakeoffHours, 23);
@@ -135,12 +129,10 @@ public class first extends AppCompatActivity {
 
     private void saveAndProceed() {
         try {
-            // Сохраняем все данные
             saveData();
             DbHelper dbh = DbHelper.getInstance(this);
             dbh.addVoyage(currentVoyage);
 
-            // Переход к следующему экрану
             Intent intent = new Intent(this, stay.class);
             intent.putExtra("voyage", currentVoyage);
             intent.putExtra("flight_index", currentFlightIndex);
@@ -152,19 +144,15 @@ public class first extends AppCompatActivity {
 
     private void saveData() {
         try {
-            // Сохранение предварительного времени
             if (!preFlightMinutes.getText().toString().isEmpty()) {
                 currentVoyage.preFlightTime = Integer.parseInt(preFlightMinutes.getText().toString());
             }
 
-            // Сохранение фактического времени взлёта
             saveTakeoffTime();
 
-            // Сохранение планируемого времени взлёта
             savePlannedTakeoffTime();
 
         } catch (Exception e) {
-            // Игнорируем ошибки при сохранении
         }
     }
 
@@ -225,12 +213,10 @@ public class first extends AppCompatActivity {
     private void updateUI() {
         flightTitle.setText(String.format("Полёт %d", currentFlightIndex));
 
-        // Обновляем только если значения изменились
         if (!preFlightMinutes.getText().toString().equals(String.valueOf(currentVoyage.preFlightTime))) {
             preFlightMinutes.setText(String.valueOf(currentVoyage.preFlightTime));
         }
 
-        // Фактическое время взлёта
         if (currentVoyage.takeoffTime != null) {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             String currentDate = takeoffDate.getText().toString();
@@ -243,7 +229,6 @@ public class first extends AppCompatActivity {
             }
         }
 
-        // Планируемое время взлёта
         if (currentVoyage.plannedTakeoffTime != null) {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             String currentDate = plannedTakeoffDate.getText().toString();

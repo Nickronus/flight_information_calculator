@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import java.time.LocalDateTime;
+
 
 public class centering extends AppCompatActivity {
 
@@ -18,7 +18,6 @@ public class centering extends AppCompatActivity {
     private Flight currentFlight;
     private int currentFlightIndex = 0;
 
-    // UI элементы
     private TextView flightTitle, massValue, centeringValue;
     private EditText remainingInput, fuelInput, passengersInput, cargoInput;
     private ImageButton btnBack, btnForward;
@@ -29,7 +28,6 @@ public class centering extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_centering);
 
-        // Получаем данные из Intent
         currentVoyage = (Voyage) getIntent().getSerializableExtra("voyage");
         currentFlightIndex = getIntent().getIntExtra("flight_index", 0);
         currentFlight = currentVoyage.flights.get(currentFlightIndex - 1);
@@ -71,10 +69,8 @@ public class centering extends AppCompatActivity {
     }
 
     private void updateUI() {
-        // Установка заголовка
         flightTitle.setText(String.format("Полёт %d", currentFlightIndex));
 
-        // Заполнение полей, если данные уже есть
         if (currentFlight.remaining > 0) {
             remainingInput.setText(String.valueOf(currentFlight.remaining));
         }
@@ -93,7 +89,6 @@ public class centering extends AppCompatActivity {
 
     private void updateCalculations() {
         try {
-            // Получаем текущие значения из полей ввода
             double remaining = getDoubleFromEditText(remainingInput);
             double refueled = getDoubleFromEditText(fuelInput);
             int people = getIntFromEditText(passengersInput);
@@ -105,7 +100,7 @@ public class centering extends AppCompatActivity {
 
             massValue.setText(String.format("%.1f кг", totalMass));
 
-            // Расчет центровки (упрощенная формула)
+            // Расчет центровки
             double massEffect = (totalMass - currentVoyage.emptyAircraftMass) / 50 + currentVoyage.baseCentering;
             centeringValue.setText(String.format("%.2f", massEffect));
 
@@ -117,7 +112,6 @@ public class centering extends AppCompatActivity {
             }
 
         } catch (NumberFormatException e) {
-            // Игнорируем ошибки при частичном вводе
         }
     }
 
@@ -135,7 +129,6 @@ public class centering extends AppCompatActivity {
 
     private void saveAndProceed() {
         try {
-            // Сохранение введенных данных
             currentFlight.remaining = getDoubleFromEditText(remainingInput);
             currentFlight.refueled = getDoubleFromEditText(fuelInput);
             currentFlight.people = getIntFromEditText(passengersInput);
@@ -145,7 +138,6 @@ public class centering extends AppCompatActivity {
             dbh.addVoyage(currentVoyage);
 
             Intent intent = null;
-            // Переход к следующему экрану
             if (currentFlightIndex == 1) {
                 intent = new Intent(this, first.class);
             }
@@ -185,7 +177,6 @@ public class centering extends AppCompatActivity {
             currentFlight.people = getIntFromEditText(passengersInput);
             currentFlight.cargo = getDoubleFromEditText(cargoInput);
         } catch (NumberFormatException e) {
-            // Игнорируем ошибки при сохранении
         }
     }
 

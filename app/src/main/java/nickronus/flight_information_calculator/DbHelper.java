@@ -56,7 +56,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Создание таблицы Voyage (name теперь PRIMARY KEY)
+        // Создание таблицы Voyage
         String createVoyageTable = "CREATE TABLE " + TABLE_VOYAGE + "("
                 + COLUMN_VOYAGE_NAME + " TEXT PRIMARY KEY,"
                 + COLUMN_EMPTY_MASS + " REAL,"
@@ -70,7 +70,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 + ")";
         db.execSQL(createVoyageTable);
 
-        // Создание таблицы Flight (теперь ссылается на voyage_name)
+        // Создание таблицы Flight
         String createFlightTable = "CREATE TABLE " + TABLE_FLIGHT + "("
                 + COLUMN_FLIGHT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_VOYAGE_NAME_FK + " TEXT,"
@@ -94,7 +94,6 @@ public class DbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Метод для сохранения Voyage (теперь обновляет, если уже существует)
     public void addVoyage(Voyage voyage) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -109,14 +108,9 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(COLUMN_BASE_CENTERING, voyage.baseCentering);
         values.put(COLUMN_REMAINING, voyage.remaining);
 
-        // Используем insertWithOnConflict для обновления существующей записи
         db.insertWithOnConflict(TABLE_VOYAGE, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-
-        // Сохраняем все Flight этого Voyage (предварительно удаляем старые)
         if (voyage.flights != null && !voyage.flights.isEmpty()) {
-            // Удаляем старые рейсы перед добавлением новых
             db.delete(TABLE_FLIGHT, COLUMN_VOYAGE_NAME_FK + " = ?", new String[]{voyage.name});
-
             for (Flight flight : voyage.flights) {
                 addFlight(flight, voyage.name);
             }
@@ -125,7 +119,6 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Метод для сохранения Flight (теперь принимает voyageName вместо voyageId)
     public long addFlight(Flight flight, String voyageName) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -145,7 +138,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return flightId;
     }
 
-    // Метод для получения всех Voyage
     public List<Voyage> getAllVoyages() {
         List<Voyage> voyageList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_VOYAGE;
@@ -168,7 +160,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return voyageList;
     }
 
-    // Метод для получения всех Flight для конкретного Voyage (теперь по имени)
     private List<Flight> getFlightsForVoyage(String voyageName) {
         List<Flight> flightList = new ArrayList<>();
         if (voyageName == null || voyageName.isEmpty()) return flightList;
@@ -191,7 +182,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return flightList;
     }
 
-    // Безопасное создание Voyage из Cursor
     private Voyage getVoyageFromCursor(Cursor cursor) {
         Voyage voyage = new Voyage(
                 getStringSafe(cursor, COLUMN_VOYAGE_NAME, ""),
@@ -209,7 +199,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return voyage;
     }
 
-    // Безопасное создание Flight из Cursor
     private Flight getFlightFromCursor(Cursor cursor) {
         return new Flight(
                 getDoubleSafe(cursor, COLUMN_REMAINING_FUEL, 0),
@@ -229,7 +218,6 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Безопасные методы для работы с Cursor
     private String getStringSafe(Cursor cursor, String columnName, String defaultValue) {
         int index = cursor.getColumnIndex(columnName);
         return index >= 0 ? cursor.getString(index) : defaultValue;
@@ -250,7 +238,6 @@ public class DbHelper extends SQLiteOpenHelper {
         return index >= 0 ? cursor.getDouble(index) : defaultValue;
     }
 
-    // Метод для парсинга строки в LocalDateTime с обработкой ошибок
     private LocalDateTime parseDateTime(String dateTimeStr) {
         if (dateTimeStr == null || dateTimeStr.isEmpty()) {
             return null;
@@ -263,14 +250,10 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
-    // Дополнительные методы для работы с базой данных
     public boolean deleteVoyage(String voyageName) {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
-            // Удаляем сначала все связанные Flight
             db.delete(TABLE_FLIGHT, COLUMN_VOYAGE_NAME_FK + " = ?", new String[]{voyageName});
-
-            // Затем удаляем сам Voyage
             int deletedRows = db.delete(TABLE_VOYAGE, COLUMN_VOYAGE_NAME + " = ?", new String[]{voyageName});
             return deletedRows > 0;
         } finally {

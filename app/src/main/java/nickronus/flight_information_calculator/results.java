@@ -48,7 +48,6 @@ public class results extends AppCompatActivity {
             return insets;
         });
 
-        // Получаем данные из Intent
         currentVoyage = (Voyage) getIntent().getSerializableExtra("voyage");
 
         textPoint = findViewById(R.id.textPoint);

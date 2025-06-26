@@ -1,26 +1,12 @@
 package nickronus.flight_information_calculator;
 
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import android.content.Intent;
-import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
-import android.os.Bundle;
-import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
-import java.time.format.DateTimeFormatter;
 
 public class activity_flight_details extends AppCompatActivity {
 
@@ -43,7 +29,6 @@ public class activity_flight_details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flight_details);
 
-        // Initialize UI components
         remainingEditText = findViewById(R.id.remainingEditText);
         refueledEditText = findViewById(R.id.refueledEditText);
         peopleEditText = findViewById(R.id.peopleEditText);
@@ -57,13 +42,11 @@ public class activity_flight_details extends AppCompatActivity {
         Button nextButton = findViewById(R.id.nextButton);
         Button cancelButton = findViewById(R.id.cancelButton);
 
-        // Get data from intent
         Intent intent = getIntent();
         currentVoyage = (Voyage) intent.getSerializableExtra("voyage");
         currentFlight = currentVoyage.flights.get(0);
         flightPosition = 1;
 
-        // Set up button listeners
         backButton.setOnClickListener(v -> navigateBack());
         nextButton.setOnClickListener(v -> navigateNext());
         cancelButton.setOnClickListener(v -> cancel());

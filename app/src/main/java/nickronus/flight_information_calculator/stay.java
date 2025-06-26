@@ -14,7 +14,6 @@ public class stay extends AppCompatActivity {
     private Flight currentFlight;
     private int currentFlightIndex = 0;
 
-    // UI элементы
     private TextView flightTitle;
     private EditText groundMinutes, parkingMinutes;
     private ImageButton btnBack, btnForward;
@@ -25,12 +24,10 @@ public class stay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stay);
 
-        // Получаем данные из Intent
         currentVoyage = (Voyage) getIntent().getSerializableExtra("voyage");
         currentFlightIndex = getIntent().getIntExtra("flight_index", 0);
         currentFlight = currentVoyage.flights.get(currentFlightIndex - 1);
 
-        // Инициализация UI элементов
         flightTitle = findViewById(R.id.flightTitle);
         groundMinutes = findViewById(R.id.groundMinutes);
         parkingMinutes = findViewById(R.id.parkingMinutes);
@@ -39,10 +36,8 @@ public class stay extends AppCompatActivity {
         btnBackBottom = findViewById(R.id.btnBackBottom);
         btnNext = findViewById(R.id.btnNext);
 
-        // Установка заголовка
         flightTitle.setText(String.format("Полёт %d", currentFlightIndex));
 
-        // Заполнение полей, если данные уже есть
         if (currentFlight.groundTime > 0) {
             groundMinutes.setText(String.valueOf(currentFlight.groundTime));
         }
@@ -50,7 +45,6 @@ public class stay extends AppCompatActivity {
             parkingMinutes.setText(String.valueOf(currentFlight.parkingTime));
         }
 
-        // Установка обработчиков событий
         btnBack.setOnClickListener(v -> navigateBack());
         btnForward.setOnClickListener(v -> navigateForward());
         btnBackBottom.setOnClickListener(v -> saveAndBack());
@@ -59,12 +53,10 @@ public class stay extends AppCompatActivity {
 
     private  void save() {
         try {
-            // Сохранение времени на земле
             if (!groundMinutes.getText().toString().isEmpty()) {
                 currentFlight.groundTime = Integer.parseInt(groundMinutes.getText().toString());
             }
 
-            // Сохранение времени стоянки
             if (!parkingMinutes.getText().toString().isEmpty()) {
                 currentFlight.parkingTime = Integer.parseInt(parkingMinutes.getText().toString());
             }
@@ -78,7 +70,7 @@ public class stay extends AppCompatActivity {
         try {
             DbHelper dbh = DbHelper.getInstance(this);
             dbh.addVoyage(currentVoyage);
-            // Переход к следующему экрану
+
             Intent intent = new Intent(this, landing.class);
             intent.putExtra("voyage", currentVoyage);
             intent.putExtra("flight_index", currentFlightIndex);
@@ -91,7 +83,6 @@ public class stay extends AppCompatActivity {
     private void saveAndBack(){
         save();
         try {
-            // Переход к следующему экрану
             Intent intent = new Intent(this, centering.class);
             intent.putExtra("voyage", currentVoyage);
             intent.putExtra("flight_index", currentFlightIndex);
@@ -131,7 +122,6 @@ public class stay extends AppCompatActivity {
                 currentFlight.parkingTime = Integer.parseInt(parkingMinutes.getText().toString());
             }
         } catch (NumberFormatException e) {
-            // Игнорируем ошибки при сохранении
         }
     }
 

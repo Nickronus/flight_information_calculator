@@ -42,7 +42,6 @@ public class activity_voyage_history extends AppCompatActivity
         adapter = new VoyageAdapter(voyages, this, this, this);
         voyageRecyclerView.setAdapter(adapter);
 
-        // Обработчик для кнопки "Назад"
         backButton.setOnClickListener(v -> onBackPressed());
     }
 
@@ -60,12 +59,11 @@ public class activity_voyage_history extends AppCompatActivity
     public void onDeleteClick(Voyage voyage) {
         int position = voyages.indexOf(voyage);
         if (position != -1) {
-            // Создаем диалог подтверждения
+            // Диалог подтверждения
             new AlertDialog.Builder(this)
                     .setTitle("Подтверждение удаления")
                     .setMessage("Вы уверены, что хотите удалить рейс \"" + voyage.name + "\"?")
                     .setPositiveButton("Удалить", (dialog, which) -> {
-                        // Действие при подтверждении
                         voyages.remove(position);
                         adapter.notifyItemRemoved(position);
 
@@ -73,7 +71,6 @@ public class activity_voyage_history extends AppCompatActivity
                         Toast.makeText(this, "Рейс удален", Toast.LENGTH_SHORT).show();
                     })
                     .setNegativeButton("Отмена", (dialog, which) -> {
-                        // Ничего не делаем, просто закрываем диалог
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -95,7 +92,6 @@ public class activity_voyage_history extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        // Закрываем активность и возвращаемся к предыдущей
         super.onBackPressed();
         finish();
     }

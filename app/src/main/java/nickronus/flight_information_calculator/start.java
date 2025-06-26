@@ -13,7 +13,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.List;
 
 public class start extends AppCompatActivity {
     private Voyage currentVoyage;
@@ -32,30 +31,25 @@ public class start extends AppCompatActivity {
             return insets;
         });
 
-        // Инициализация UI
         etFlightName = findViewById(R.id.editTextText3);
         etEmptyMass = findViewById(R.id.numberInput5);
         etPassengerMass = findViewById(R.id.numberInput6);
         baseCentering = findViewById(R.id.baseCenteringInput);
         buttonStart = findViewById(R.id.buttonStartGo3);
 
-        // Получаем объект Voyage из Intent
         currentVoyage = (Voyage) getIntent().getSerializableExtra("voyage");
 
-        // Если Voyage не был передан, создаем новый
         if (currentVoyage == null) {
             currentVoyage = new Voyage("", 0, 0);
             Flight firstFlight = new Flight(0, 0, 0, 0, 0, 0, 0, null);
             currentVoyage.flights.add(firstFlight);
         }
 
-        // Заполнение полей, если данные уже есть
         etFlightName.setText(currentVoyage.name);
         etEmptyMass.setText(String.valueOf(currentVoyage.emptyAircraftMass));
         etPassengerMass.setText(String.valueOf(currentVoyage.averagePassengerMass));
         baseCentering.setText(String.valueOf(currentVoyage.baseCentering));
 
-        // Установка слушателя нажатий на кнопку "Старт"
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
